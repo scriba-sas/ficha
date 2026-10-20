@@ -174,7 +174,7 @@ footer a{color:inherit}
         <span class="label" id="pagoLbl">Forma de pago que solicitas</span>
         <div class="chips" role="radiogroup" aria-labelledby="pagoLbl">
           <input type="radio" name="formaPago" id="fp1" value="Contado"><label for="fp1">Contado<small>pago anticipado o contra entrega</small></label>
-          <input type="radio" name="formaPago" id="fp2" value="Crédito 30 días"><label for="fp2">Crédito a 30 días<small>sujeto a aprobación</small></label>
+          <input type="radio" name="formaPago" id="fp2" value="Crédito"><label for="fp2">Crédito<small>30, 45, 60 días u otro · sujeto a aprobación</small></label>
         </div>
         <div class="err">Elige una opción.</div>
       </div>
@@ -349,11 +349,28 @@ footer a{color:inherit}
     <!-- PASO 4 · Crédito -->
     <section class="step" data-step="4" data-name="Crédito" data-nivel="C" hidden>
       <h2>Solicitud de crédito</h2>
-      <p class="sub">Plazo de pago: <b>30 días</b> desde la fecha de la factura. El cupo lo aprueba administración.</p>
+      <p class="sub">El plazo se cuenta desde la fecha de la factura. Plazo y cupo los aprueba administración.</p>
+
+      <div class="field" id="plazoField">
+        <span class="label" id="plazoLbl">Plazo de pago que solicitas</span>
+        <div class="chips" role="radiogroup" aria-labelledby="plazoLbl" style="grid-template-columns:repeat(4,1fr)">
+          <input type="radio" name="plazo" id="pz30" value="30"><label for="pz30">30 días</label>
+          <input type="radio" name="plazo" id="pz45" value="45"><label for="pz45">45 días</label>
+          <input type="radio" name="plazo" id="pz60" value="60"><label for="pz60">60 días</label>
+          <input type="radio" name="plazo" id="pzOtro" value="Otro"><label for="pzOtro">Otro</label>
+        </div>
+        <div class="err">Elige el plazo.</div>
+      </div>
+      <div class="field" id="plazoOtroField" hidden>
+        <label for="plazoOtro">¿Cuántos días?</label>
+        <input id="plazoOtro" name="plazoOtro" type="text" inputmode="numeric" maxlength="3" placeholder="Ej. 90" required data-v="dias">
+        <div class="err">Escribe el número de días (entre 1 y 180).</div>
+      </div>
 
       <div class="field">
         <label for="cupo">Cupo mensual que solicitas (COP)</label>
         <input id="cupo" name="cupo" type="text" inputmode="numeric" placeholder="Ej. 2.000.000" required data-v="money">
+        <div class="hint">Para cupos superiores a $10.000.000 te pediremos verificar tu correo con un código al firmar.</div>
         <div class="err">Escribe un valor.</div>
       </div>
 
@@ -440,7 +457,7 @@ footer a{color:inherit}
       <div class="legal" data-aut="credito" data-nivel="C">
         <div class="check"><input type="checkbox" id="aCred" name="aCred"><label for="aCred">Acepto las condiciones de crédito y el compromiso de pago</label></div>
         <details><summary>Leer texto completo</summary>
-          <p>Solicito a Scriba S.A.S. crédito para la compra de sus productos. Entiendo que el crédito y su cupo están sujetos a aprobación y pueden modificarse o suspenderse según el comportamiento de pago. Si se aprueba, me obligo a pagar el valor total de cada factura dentro de los 30 días calendario siguientes a su fecha de expedición. En caso de mora reconoceré intereses moratorios a la tasa máxima legal permitida y los gastos razonables de cobranza, y Scriba S.A.S. podrá suspender los despachos hasta que la obligación se ponga al día.</p>
+          <p>Solicito a Scriba S.A.S. crédito para la compra de sus productos. Entiendo que el crédito y su cupo están sujetos a aprobación y pueden modificarse o suspenderse según el comportamiento de pago. Si se aprueba, me obligo a pagar el valor total de cada factura dentro del plazo aprobado por Scriba S.A.S. (<span class="plazoTxt">30</span> días calendario solicitados), contado desde su fecha de expedición. En caso de mora reconoceré intereses moratorios a la tasa máxima legal permitida y los gastos razonables de cobranza, y Scriba S.A.S. podrá suspender los despachos hasta que la obligación se ponga al día.</p>
           <p>Me comprometo a firmar el pagaré con carta de instrucciones que Scriba S.A.S. me presente como respaldo del crédito.</p>
         </details>
         <div class="err" style="margin-left:30px">Debes aceptar las condiciones de crédito.</div>
@@ -457,7 +474,7 @@ footer a{color:inherit}
       <div class="legal" data-aut="firma">
         <div class="check"><input type="checkbox" id="aFirma" name="aFirma"><label for="aFirma">Acepto firmar este documento de forma electrónica</label></div>
         <details><summary>Leer texto completo</summary>
-          <p>Conforme a la Ley 527 de 1999 y al Decreto 2364 de 2012 (compilado en el Decreto 1074 de 2015), acepto que mi firma trazada en este formulario, junto con mis datos de identificación y, en las solicitudes de crédito, la verificación del código enviado a mi correo, me identifica como firmante y tiene los mismos efectos jurídicos que mi firma manuscrita. Recibiré una copia en PDF de este documento en mi correo.</p>
+          <p>Conforme a la Ley 527 de 1999 y al Decreto 2364 de 2012 (compilado en el Decreto 1074 de 2015), acepto que mi firma trazada en este formulario, junto con mis datos de identificación y, en las solicitudes de crédito superiores a $10.000.000, la verificación del código enviado a mi correo, me identifica como firmante y tiene los mismos efectos jurídicos que mi firma manuscrita. Recibiré una copia en PDF de este documento en mi correo.</p>
         </details>
         <div class="err" style="margin-left:30px">Necesario para firmar.</div>
       </div>
@@ -476,13 +493,13 @@ footer a{color:inherit}
         <label for="fCorreo" id="correoLbl">Tu correo (te enviamos un código)</label>
         <div class="otp">
           <input id="fCorreo" name="fCorreo" type="email" inputmode="email" autocomplete="email" required data-v="email">
-          <button type="button" class="sec" id="btnCodigo" data-nivel="C">Enviar código</button>
+          <button type="button" class="sec" id="btnCodigo">Enviar código</button>
         </div>
         <div class="err" id="correoErr">Correo no válido.</div>
         <div class="ok-msg" id="codigoOk">Te enviamos un código de 6 dígitos. Revisa también correo no deseado.</div>
       </div>
-      <!-- El código de verificación solo se pide en solicitudes de crédito (nivel C) -->
-      <div class="field" data-nivel="C">
+      <!-- El código de verificación solo se pide en créditos con cupo superior a MONTO_CODIGO -->
+      <div class="field" id="codigoField">
         <label for="codigo">Código de verificación</label>
         <input id="codigo" name="codigo" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="6 dígitos" required data-v="otp">
         <div class="err">Escribe el código de 6 dígitos que te llegó al correo.</div>
@@ -554,9 +571,13 @@ const tipo = () => f.tipoPersona.value;
 function nivel(){
   const t = tipo();
   if (t === 'Entidad pública') return 'D';
-  if (f.formaPago.value === 'Crédito 30 días') return 'C';
+  if (f.formaPago.value === 'Crédito') return 'C';
   return t === 'Empresa' ? 'B' : 'A';
 }
+// El código por correo solo se pide en créditos con cupo superior a este valor (igual que en Vinculacion.gs)
+const MONTO_CODIGO = 10000000;
+const requiereCodigo = () => nivel() === 'C' && Number(digitos(f.cupo.value)) > MONTO_CODIGO;
+const plazoDias = () => f.plazo.value === 'Otro' ? Number(digitos(f.plazoOtro.value)) : Number(f.plazo.value || 0);
 // ¿El campo aplica según las reglas? (ignora que su paso no esté en pantalla en este momento)
 function visible(el){
   for (let n = el; n && n !== f; n = n.parentElement) {
@@ -587,7 +608,14 @@ function aplicarReglas(){
   f.querySelectorAll('[data-doc]').forEach(el => { el.hidden = !show[el.dataset.doc]; });
   document.getElementById('rutOpt').textContent = req.rut ? '' : '(opcional)';
   document.getElementById('camOpt').textContent = req.camara ? '' : '(opcional)';
-  document.getElementById('correoLbl').textContent = n === 'C' ? 'Tu correo (te enviamos un código)' : 'Tu correo (te enviamos copia del documento firmado)';
+  // Plazo de crédito y código de verificación
+  document.getElementById('plazoOtroField').hidden = f.plazo.value !== 'Otro';
+  document.querySelectorAll('.plazoTxt').forEach(s => { s.textContent = plazoDias() || '—'; });
+  const cod = requiereCodigo();
+  document.getElementById('btnCodigo').hidden = !cod;
+  document.getElementById('codigoField').hidden = !cod;
+  document.getElementById('codigoOk').classList.toggle('on', cod && document.getElementById('codigoOk').classList.contains('on'));
+  document.getElementById('correoLbl').textContent = cod ? 'Tu correo (te enviamos un código)' : 'Tu correo (te enviamos copia del documento firmado)';
   document.getElementById('cedLbl').textContent = natural ? 'Cédula del titular' : 'Cédula del representante legal';
 }
 function docsRequeridos(){
@@ -612,6 +640,7 @@ function validaInput(i){
   if (t === 'doc') return /^[0-9A-Za-z]{4,15}$/.test(v.replace(/[.\-\s]/g, ''));
   if (t === 'otp') return /^\d{6}$/.test(v);
   if (t === 'money') return Number(digitos(v)) > 0;
+  if (t === 'dias') { const d = Number(digitos(v)); return d >= 1 && d <= 180; }
   if (t.startsWith('same:')) return v.toLowerCase() === f[t.slice(5)].value.trim().toLowerCase();
   return v.length >= 2;
 }
@@ -628,7 +657,7 @@ function validarPaso(step){
     if (!marcar(f.dv, dvOk)) fallo(f.dv);
   }
   // Radios obligatorios
-  const radios = { tipoPersona: 'tipoField', formaPago: 'pagoField', respIva: 'ivaField' };
+  const radios = { tipoPersona: 'tipoField', formaPago: 'pagoField', respIva: 'ivaField', plazo: 'plazoField' };
   Object.entries(radios).forEach(([name, id]) => {
     const box = document.getElementById(id);
     if (!step.contains(box) || !visible(box)) return;
@@ -708,6 +737,7 @@ f.numDoc.addEventListener('input', () => {
 });
 f.cupo.addEventListener('input', () => {
   const d = digitos(f.cupo.value); f.cupo.value = d ? Number(d).toLocaleString('es-CO') : '';
+  aplicarReglas();
 });
 
 // ---------- Navegación ----------
@@ -737,7 +767,7 @@ btnNext.addEventListener('click', async () => {
 
 function pintarResumen(){
   const n = nivel();
-  const txt = { A: 'Persona natural · contado', B: 'Empresa · contado', C: 'Solicitud de crédito a 30 días', D: 'Entidad pública' }[n];
+  const txt = { A: 'Persona natural · contado', B: 'Empresa · contado', C: `Solicitud de crédito a ${plazoDias()} días`, D: 'Entidad pública' }[n];
   document.getElementById('resumen').innerHTML =
     `<b>${esc(f.razonSocial.value)}</b>${esc(f.tipoDoc.value)} ${esc(digitos(f.numDoc.value))}${f.dv.value && !document.getElementById('dvField').hidden ? '-' + esc(f.dv.value) : ''} · ${txt}`;
 }
@@ -844,8 +874,9 @@ async function enviar(){
   try {
     const n = nivel(), pMismo = f.pMismo.checked, eMisma = f.eMisma.checked;
     const body = {
-      action: 'enviarFicha', web: f.web.value, codigo: nivel() === 'C' ? f.codigo.value.trim() : '',
-      nivel: n, tipoPersona: tipo(), formaPago: n === 'D' ? 'Según contrato u orden de compra' : f.formaPago.value,
+      action: 'enviarFicha', web: f.web.value, codigo: requiereCodigo() ? f.codigo.value.trim() : '',
+      nivel: n, tipoPersona: tipo(),
+      formaPago: n === 'D' ? 'Según contrato u orden de compra' : (n === 'C' ? `Crédito ${plazoDias()} días` : f.formaPago.value),
       telefono: cel(f.telefono.value), folio: val('folio'), asesor: val('asesor'),
       tipoDoc: f.tipoDoc.value, numDoc: digitos(f.numDoc.value) || f.numDoc.value.trim(), dv: val('dv'),
       razonSocial: f.razonSocial.value.trim(), nombreComercial: val('nombreComercial'),
@@ -860,7 +891,7 @@ async function enviar(){
       entrega: { direccion: eMisma ? f.dirFiscal.value.trim() : val('eDir'), ciudad: eMisma ? f.municipio.value.trim() : val('eCiudad'),
                  recibe: f.eRecibe.value.trim(), cel: cel(f.eCel.value), horario: val('eHorario') },
       credito: n !== 'C' ? null : {
-        cupo: Number(digitos(f.cupo.value)), plazo: 30,
+        cupo: Number(digitos(f.cupo.value)), plazo: plazoDias(),
         repLegal: tipo() === 'Empresa' ? { nombre: val('rlNombre'), doc: digitos(val('rlDoc')) } : null,
         referencias: [ { empresa: val('ref1Emp'), contacto: val('ref1Con'), tel: digitos(val('ref1Tel')) },
                        { empresa: val('ref2Emp'), contacto: val('ref2Con'), tel: digitos(val('ref2Tel')) } ]
@@ -879,7 +910,7 @@ async function enviar(){
     const data = await api(body);
     document.getElementById('doneCorreo').textContent = body.firmante.correo;
     document.getElementById('doneId').textContent = data.id;
-    if (n === 'C') document.getElementById('doneMsg').textContent = 'Administración estudiará tu solicitud de crédito en 2 a 3 días hábiles y te avisaremos por WhatsApp. Si se aprueba, te enviaremos el pagaré para firma.';
+    if (n === 'C') document.getElementById('doneMsg').textContent = 'Administración estudiará tu solicitud de crédito en 2 a 3 días hábiles y te avisaremos por WhatsApp.';
     f.hidden = true; document.getElementById('intro').hidden = true;
     document.getElementById('done').hidden = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
